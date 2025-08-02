@@ -12,4 +12,7 @@ ${PROG}: ${OBJS}
 clean:
 	rm -f ${OBJS} ${PROG}
 
-.PHONY: clean
+install: ${PROG}
+	install -D -m755 ${PROG} ${DESTDIR}/usr/bin/${PROG}
+
+.PHONY: clean install
