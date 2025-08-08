@@ -23,7 +23,7 @@ const char *d_types[] = {
 
 [[noreturn]] void usage(void)
 {
-	fprintf(stderr, "usage: treescan dir > dir.list\n");
+	fprintf(stderr, "usage: treescan dir... > dir.list\n");
 	exit(EXIT_FAILURE);
 }
 
@@ -77,10 +77,13 @@ int main(int argc, const char **argv)
 	if (argc < 2)
 		usage();
 
-	if (!scan(argv[1]))
+	for (int i = 1; i < argc; i++)
 	{
-		fprintf(stderr, "scanning %s: %s\n", argv[1], strerror(errno));
-		return EXIT_FAILURE;
+		if (!scan(argv[i]))
+		{
+			fprintf(stderr, "scanning %s: %s\n", argv[i], strerror(errno));
+			return EXIT_FAILURE;
+		}
 	}
 
 	return EXIT_SUCCESS;
